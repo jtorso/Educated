@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta tags for SEO and accessibility -->
+    <meta name="description" content="Educated: A supportive platform to help high school students, especially students of color, feel more prepared for college by mastering time management and essential academic skills.">
+    <meta name="keywords" content="college preparation, high school, time management, student success, academic skills, Gen Z">
+    <title>Educated: Master Your Deadlines, Master Your Future</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease;
+        }
+        /* Custom styles for modal content, ensuring text is readable within the modal */
+        .modal-content p, .modal-content h3 {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        /* A little extra scroll margin for fixed header */
+        .scroll-mt-20 {
+            scroll-margin-top: 5rem;
+        }
+    </style>
+    <!-- Google Sign-In SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="text-gray-900 leading-relaxed">
+
+    <!-- Header Section -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <a href="#hero" class="flex-shrink-0 font-extrabold text-2xl text-indigo-600 tracking-tight">
+                Educated
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-8">
+                <!-- Desktop navigation menu -->
+                <ul id="desktop-menu" class="flex items-center space-x-8" role="list">
+                    <li><a href="#mission" class="text-gray-600 hover:text-indigo-600 transition duration-300">About</a></li>
+                    <li><a href="#impact" class="text-gray-600 hover:text-indigo-600 transition duration-300">Our Impact</a></li>
+                    <li><a href="#testimonials" class="text-gray-600 hover:text-indigo-600 transition duration-300">Testimonials</a></li>
+                    <li><a href="#contact" class="text-gray-600 hover:text-indigo-600 transition duration-300">Contact</a></li>
+                    
+                    <li id="logged-in-links" class="hidden flex items-center space-x-8">
+                        <a href="#video-skills" class="text-gray-600 hover:text-indigo-600 transition duration-300">Skills</a>
+                        <a href="#budgeting-tips" class="text-gray-600 hover:text-indigo-600 transition duration-300">Budgeting</a>
+                    </li>
+                </ul>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Logout button placeholder -->
+                    <div id="logout-button-container" class="hidden">
+                        <button id="logout-btn" class="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full transition duration-300">Log Out</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4 md:hidden">
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-label="Open main menu">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile navigation menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg py-4">
+            <ul role="list" class="space-y-2 px-2">
+                <li><a href="#mission" class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600">About</a></li>
+                <li><a href="#impact" class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600">Our Impact</a></li>
+                <li><a href="#testimonials" class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600">Testimonials</a></li>
+                <li><a href="#contact" class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600">Contact</a></li>
+                <!-- Conditional mobile navigation links for logged-in users -->
+                <li id="mobile-logged-in-links" class="hidden">
+                    <a href="#video-skills" class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600">Skills</a>
+                    <a href="#budgeting-tips" class="block rounded-md px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600">Budgeting</a>
+                </li>
+                <!-- Mobile logout button placeholder -->
+                <li id="mobile-logout-button-container" class="hidden">
+                    <button id="mobile-logout-btn" class="w-full text-white bg-red-500 hover:bg-red-600 py-2 px-3 mt-4 rounded-md transition duration-300">Log Out</button>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main aria-label="Main content of the website">
+        <!-- Hero Section -->
+        <section id="hero" class="py-24 md:py-32 bg-gradient-to-r from-indigo-500 to-purple-600 text-white" data-page="home">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-md">
+                    Master Your Deadlines, Master Your Future.
+                </h1>
+                <p class="text-lg sm:text-xl max-w-2xl mx-auto mb-8 opacity-90">
+                    We're here to make the transition to college smoother, one deadline at a time.
+                </p>
+                <!-- Button for future interactivity -->
+                <button id="get-started-btn" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105" aria-label="Get Started with Educated">
+                    Get Started
+                </button>
+            </div>
+        </section>
+
+        <!-- Mission/About Section -->
+        <section id="mission" class="py-24 bg-white scroll-mt-20" aria-label="Our mission and why we exist" data-page="home">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-bold mb-4">Why <span class="text-indigo-600">Educated?</span></h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    College is a big step, and for many, the leap from high school can feel overwhelming. We understand that managing a new academic schedule and a social life can be tough. Our mission is to equip you with the essential time management and organization skills you need to thrive, not just survive.
+                </p>
+            </div>
+        </section>
+
+        <!-- New: The Power of Preparation Section -->
+        <section id="impact" class="py-24 bg-gray-100 scroll-mt-20" aria-label="The importance of college preparation" data-page="home">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-8">The Power of Preparation</h2>
+                <p class="text-lg text-gray-600 max-w-4xl mx-auto text-center mb-8">
+                    Entering college unprepared is a major hurdle. Many students, especially from underserved backgrounds, find themselves struggling with a lack of time management, academic planning, and financial literacy. This can lead to overwhelming stress, poor academic performance, and in some cases, even dropping out. At Educated, we believe that **preparation is the key to unlocking your potential** and ensuring a smooth, successful transition to college life.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch text-center">
+                    <div class="bg-white rounded-xl shadow-lg p-6 h-full">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-600">The Benefits of Readiness</h3>
+                        <ul class="text-gray-700 space-y-6 text-left">
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                **Academic Confidence:** Strong study habits and time management skills built in advance lead to better grades and reduced stress.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                **Financial Well-being:** Learning to manage your money and avoid debt can be as important as managing your grades.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                **Mental and Emotional Health:** Staying on top of deadlines and feeling organized reduces anxiety and helps you enjoy your college experience.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-6 h-full">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-600">What is College Readiness?</h3>
+                        <ul class="text-gray-700 space-y-6 text-left">
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                    </svg>
+                                </span>
+                                **Mastering Time Management:** Knowing how to balance short-term fun with long-term goals.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                **Strategic Planning:** Creating a schedule that prioritizes assignments and projects effectively.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5.7a9 9 0 017.388 9.458A10.5 10.5 0 0115.56 21H5a2 2 0 01-2-2V7.414a2 2 0 01.586-1.414L6.586 3.586A2 2 0 017.414 3z" />
+                                    </svg>
+                                </span>
+                                **Building Self-Discipline:** Cultivating the ability to stay focused and motivated, even when faced with distractions.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New: Budgeting Basics Section - Now part of the logged-in content -->
+        <section id="video-skills" class="py-24 bg-white scroll-mt-20 hidden" aria-label="College prep videos" data-page="skills">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 text-gray-900 drop-shadow-md">College Prep:<br>Your Guide to a Strong Start</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12">
+                    These smart strategies and tips are designed to help you build confidence, master essential skills, and pave the way for a successful and stress-free college career.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Video Placeholder Card 1 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6">
+                        <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-sm">
+                            <!-- Video coming soon -->
+                            <span class="text-center p-4">Video: The Art of Time Management</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4 mb-2">The Weekly Plan</h3>
+                        <p class="text-gray-600">Learn how to create a weekly schedule that balances classes, homework, and fun.</p>
+                    </div>
+
+                    <!-- Video Placeholder Card 2 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6" aria-label="Video on prioritizing assignments">
+                        <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-sm">
+                            <!-- Video coming soon -->
+                            <span class="text-center p-4">Video: Prioritizing Your To-Do List</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4 mb-2">The Procrastination Paradox</h3>
+                        <p class="text-gray-600">Discover strategies to tackle the most important tasks first and avoid last-minute stress.</p>
+                    </div>
+
+                    <!-- Video Placeholder Card 3 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6" aria-label="Video on long-term goal setting">
+                        <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-sm">
+                            <!-- Video coming soon -->
+                            <span class="text-center p-4">Video: Short-Term Pain, Long-Term Gain</span>
+                        </div>
+                        <h3 class="text-xl font-semibold mt-4 mb-2">Sacrifice for Success</h3>
+                        <p class="text-gray-600">Understand the power of making smart choices today for a successful tomorrow.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New: Budgeting Basics Section - Now part of the logged-in content -->
+        <section id="budgeting-tips" class="py-24 bg-gray-100 scroll-mt-20 hidden" aria-label="Budgeting basics for college students" data-page="budgeting">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-8">Budgeting Basics: Your Money, Your Future</h2>
+                <p class="text-lg text-gray-600 max-w-4xl mx-auto text-center mb-8">
+                    Mastering your finances in college is one of the most powerful skills you can learn. It's not about being rich—it's about being smart with your money so you can focus on your studies and enjoy your college experience without unnecessary stress. Here's a simple, no-jargon guide to building a solid financial foundation.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                    <!-- Budget Table -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-600">Sample Monthly Budget</h3>
+                        <p class="text-sm text-gray-600 mb-4">
+                            This is an example for a student receiving $1,500/month from a part-time job or financial aid. Adjust these numbers to fit your own income and expenses.
+                        </p>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-100">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Housing & Utilities</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$500</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Food</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$300</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Transportation</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$100</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Personal & Fun</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$200</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Books & Supplies</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$100</td>
+                                    </tr>
+                                    <tr class="font-bold">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Monthly Expenses</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,200</td>
+                                    </tr>
+                                    <tr class="font-bold">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Total Savings (20%)</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-indigo-600">$300</td>
+                                    </tr>
+                                    <tr class="bg-indigo-500 text-white font-bold">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">Total Income</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">$1,500</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Budgeting Tips -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-600">Smart Budgeting Habits</h3>
+                        <p class="text-gray-700 mb-4">
+                            Start with the **50/30/20 Rule** as a simple guide:
+                        </p>
+                        <ul class="text-gray-700 space-y-6 text-left mb-6">
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                **50% for Needs:** Cover essential expenses like housing, tuition, and groceries.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                **30% for Wants:** Enjoy discretionary spending on things like eating out, movies, or hobbies.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </span>
+                                **20% for Savings:** Put money towards long-term goals like a new computer, paying off debt, or building an emergency fund.
+                            </li>
+                        </ul>
+                        <h3 class="text-2xl font-bold mb-4 text-indigo-600">Tips for Saving Money</h3>
+                        <ul class="text-gray-700 space-y-6 text-left">
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                    </svg>
+                                </span>
+                                **Meal Prep:** Cooking at home is far cheaper than eating out every day. Plan your meals for the week to save cash and time.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                    </svg>
+                                </span>
+                                **Use Student Discounts:** Always ask if a business offers a student discount. Many local and online stores do.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                    </svg>
+                                </span>
+                                **Track Your Spending:** Use a simple spreadsheet or a budgeting app to track where your money goes. Knowing your spending habits is the first step to changing them.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-24 bg-white scroll-mt-20" aria-label="Student testimonials" data-page="home">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12">Hear from our Students</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial Card 1 -->
+                    <div class="bg-gray-100 rounded-xl shadow-lg p-6">
+                        <img src="https://placehold.co/80x80/e2e8f0/64748b?text=Student" alt="Portrait of a happy student" class="w-20 h-20 rounded-full mb-4 mx-auto">
+                        <p class="text-lg italic text-gray-700">"Educated gave me the tools I needed to handle my first semester with confidence. I no longer feel overwhelmed!"</p>
+                        <p class="font-semibold text-indigo-600 mt-4">Alex R., College Freshman</p>
+                    </div>
+
+                    <!-- Testimonial Card 2 -->
+                    <div class="bg-gray-100 rounded-xl shadow-lg p-6">
+                        <img src="https://placehold.co/80x80/e2e8f0/64748b?text=Student" alt="Portrait of a happy student" class="w-20 h-20 rounded-full mb-4 mx-auto">
+                        <p class="text-lg italic text-gray-700">"The time management tips are actually useful and Gen Z–friendly. It's like having a helpful older sibling."</p>
+                        <p class="font-semibold text-indigo-600 mt-4">Maria T., High School Senior</p>
+                    </div>
+
+                    <!-- Testimonial Card 3 -->
+                    <div class="bg-gray-100 rounded-xl shadow-lg p-6">
+                        <img src="https://placehold.co/80x80/e2e8f0/64748b?text=Student" alt="Portrait of a happy student" class="w-20 h-20 rounded-full mb-4 mx-auto">
+                        <p class="text-lg italic text-gray-700">"I learned to prioritize and stop procrastinating. It made a huge difference in my grades and stress levels."</p>
+                        <p class="font-semibold text-indigo-600 mt-4">David S., College Sophomore</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="contact" class="py-24 bg-gray-100 scroll-mt-20" aria-label="Contact us form and sign up options" data-page="home">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-4">Get in Touch</h2>
+                <p class="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-8">
+                    We'd love to hear from you! Send us a message or join our community.
+                </p>
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="contact-name" class="block text-sm font-medium text-gray-700 sr-only">Your Name</label>
+                            <input type="text" id="contact-name" name="Name" placeholder="Your Name" class="w-full border-b-4 border-2 px-4 py-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400" required aria-label="Your Name">
+                        </div>
+                        <div>
+                            <label for="contact-email" class="block text-sm font-medium text-gray-700 sr-only">Email Address</label>
+                            <input type="email" id="contact-email" name="Email" placeholder="Your Email" class="w-full border-b-4 border-2 px-4 py-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400" required aria-label="Email Address">
+                        </div>
+                        <div>
+                            <label for="contact-subject" class="block text-sm font-medium text-gray-700 sr-only">Subject</label>
+                            <input type="text" id="contact-subject" name="Subject" placeholder="Subject" class="w-full border-b-4 border-2 px-4 py-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400" required aria-label="Subject">
+                        </div>
+                        <div>
+                            <label for="contact-message" class="block text-sm font-medium text-gray-700 sr-only">Your Message</label>
+                            <textarea id="contact-message" name="Message" rows="5" placeholder="Your Message" class="w-full border-b-4 border-2 px-4 py-3 rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 placeholder-gray-400" required aria-label="Your Message"></textarea>
+                        </div>
+                        <div id="contact-message-error" class="text-red-500 text-sm hidden">Mail must have 30+ words.</div>
+                        <div id="contact-success-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md relative hidden" role="alert">
+                            <span class="block sm:inline">Email was successfully sent!</span>
+                            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" id="close-success-btn">
+                                <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1 1 0 01-1.414 0L10 11.414l-2.93 2.93a1 1 0 11-1.414-1.414l2.93-2.93-2.93-2.93a1 1 0 011.414-1.414l2.93 2.93 2.93-2.93a1 1 0 111.414 1.414l-2.93 2.93 2.93 2.93a1 1 0 010 1.414z"/></svg>
+                            </span>
+                        </div>
+                        <div id="contact-error-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md hidden" role="alert">
+                            <span class="block sm:inline"></span>
+                        </div>
+                        <button type="submit" id="contact-submit-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-indigo-700 transition duration-300">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                <div class="mt-12 text-center">
+                    <h3 class="text-2xl font-bold mb-4">Or Join Our Community!</h3>
+                    <button id="join-educated-btn" class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105" aria-label="Sign up for our program">
+                        Join Educated
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-800 text-gray-300 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Educated. All rights reserved.</p>
+            <!-- Updated links with IDs for JavaScript functionality -->
+            <div class="mt-4 flex justify-center space-x-4">
+                <a href="#" id="privacy-policy-link" class="hover:text-indigo-400 transition duration-300">Privacy Policy</a>
+                <a href="#" id="terms-of-service-link" class="hover:text-indigo-400 transition duration-300">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals Section -->
+    <!-- Call-to-Action Modal (Updated for Google Sign-In) -->
+    <div id="cta-modal" class="fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-50 hidden" role="dialog" aria-modal="true" aria-labelledby="cta-title">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-sm p-8 relative">
+                <button id="close-cta-modal" class="modal-close-btn absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition duration-300" aria-label="Close sign in modal">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <h2 id="cta-title" class="text-2xl font-bold mb-4">Join Educated!</h2>
+                <p class="text-gray-600 mb-6">Sign in to access exclusive content.</p>
+                <!-- Google Sign-In Button -->
+                <div id="g_id_onload"
+                     data-client_id="196550438308-via4tads77rkkuf94jragsgkmu1159it.apps.googleusercontent.com"
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="rectangular"
+                     data-logo_alignment="left">
+                </div>
+                <div id="google-signin-message" class="mt-4 text-center text-sm font-medium hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-policy-modal" class="fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-50 hidden" role="dialog" aria-modal="true" aria-labelledby="privacy-policy-title">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-8 relative">
+                <button id="close-privacy-policy-modal" class="modal-close-btn absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition duration-300" aria-label="Close privacy policy modal">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <h2 id="privacy-policy-title" class="text-2xl font-bold mb-4">Privacy Policy</h2>
+                <div class="modal-content text-gray-700">
+                    <p><strong>Effective Date:</strong> August 1, 2025</p>
+                    <p>Welcome to Educated! We're committed to protecting your privacy. This policy explains how we collect, use, and protect your information when you use our website.</p>
+                    <p><strong>1. Information We Collect</strong><br>
+                    We collect minimal information to provide our services. This may include non-personally identifiable data about how you interact with our site, like pages visited and features used. If you sign up for a service, we may ask for your name and email. We do not collect sensitive personal information.</p>
+                    <p><strong>2. How We Use Your Information</strong><br>
+                    Your information helps us to improve our platform, personalize your experience, and communicate with you about updates or new features. We will never sell or share your personal information with third parties for their marketing purposes.</p>
+                    <p><strong>3. Data Security</strong><br>
+                    We take reasonable steps to protect your data from unauthorized access. However, no internet transmission is 100% secure. Please be mindful of the information you share online.</p>
+                    <p><strong>4. Your Choices</strong><br>
+                    You can opt out of any communications from us at any time. You can also request to see what information we have about you and ask for it to be deleted.</p>
+                    <p><strong>5. Changes to This Policy</strong><br>
+                    We may update this policy from time to time. We will notify you of any significant changes by posting the new policy on our website.</p>
+                    <p>If you have any questions, please contact us at privacy@educated.com.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-of-service-modal" class="fixed inset-0 z-50 overflow-y-auto bg-gray-900 bg-opacity-50 hidden" role="dialog" aria-modal="true" aria-labelledby="terms-of-service-title">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-8 relative">
+                <button id="close-terms-of-service-modal" class="modal-close-btn absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition duration-300" aria-label="Close terms of service modal">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+                <h2 id="terms-of-service-title" class="text-2xl font-bold mb-4">Terms of Service</h2>
+                <div class="modal-content text-gray-700">
+                    <p><strong>Effective Date:</strong> August 1, 2025</p>
+                    <p>Welcome to Educated! By using our website, you agree to these terms. Please read them carefully.</p>
+                    <p><strong>1. Acceptance of Terms</strong><br>
+                    By accessing and using our website, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our site.</p>
+                    <p><strong>2. Our Services</strong><br>
+                    Educated provides educational content and resources to help students succeed. Our services are provided "as-is" and we make no guarantees about the effectiveness of our content. The advice provided on this site is for informational purposes only and should not be considered professional advice.</p>
+                    <p><strong>3. User Conduct</strong><br>
+                    You agree to use our website for lawful purposes only. You will not post or transmit any content that is harmful, offensive, or violates the rights of others. We reserve the right to remove any content or suspend any user account that violates these terms.</p>
+                    <p><strong>4. Intellectual Property</strong >br>
+                    All content on this site, including text, videos, and graphics, is the property of Educated and is protected by copyright law. You may not copy, reproduce, or distribute any content without our express written permission.</p>
+                    <p><strong>5. Limitation of Liability</strong><br>
+                    Educated is not liable for any direct, indirect, incidental, or consequential damages resulting from your use of this website. We are not responsible for any harm or damages related to your reliance on information or content provided on the site.</p>
+                    <p><strong>6. Changes to These Terms</strong><br>
+                    We may modify these terms at any time. We will post the revised terms on this page, and your continued use of the site after the changes indicates your acceptance of the new terms.</p>
+                    <p>If you have questions about these terms, please contact us at legal@educated.com.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript for modal and menu functionality -->
+    <script>
+        // --- Modal Functionality ---
+
+        // Get all the necessary elements for the modals
+        const privacyPolicyLink = document.getElementById('privacy-policy-link');
+        const termsOfServiceLink = document.getElementById('terms-of-service-link');
+        const getStartedBtn = document.getElementById('get-started-btn');
+        const joinEducatedBtn = document.getElementById('join-educated-btn');
+
+        const ctaModal = document.getElementById('cta-modal');
+        const privacyPolicyModal = document.getElementById('privacy-policy-modal');
+        const termsOfServiceModal = document.getElementById('terms-of-service-modal');
+        
+        const googleSigninMessage = document.getElementById('google-signin-message');
+        
+        // --- Single Page App (SPA) Content Management ---
+        let isLoggedIn = false;
+        const mainNavLinks = document.querySelectorAll('#desktop-menu a, #mobile-menu a');
+        const loggedInLinksContainer = document.getElementById('logged-in-links');
+        const mobileLoggedInLinksContainer = document.getElementById('mobile-logged-in-links');
+        const logoutButtonContainer = document.getElementById('logout-button-container');
+        const mobileLogoutButtonContainer = document.getElementById('mobile-logout-button-container');
+        const allMainSections = document.querySelectorAll('main > section');
+        
+        // Function to update the UI based on login status
+        function updateLoggedInState() {
+            if (isLoggedIn) {
+                loggedInLinksContainer.classList.remove('hidden');
+                mobileLoggedInLinksContainer.classList.remove('hidden');
+                logoutButtonContainer.classList.remove('hidden');
+                mobileLogoutButtonContainer.classList.remove('hidden');
+                // Hide home page sections to show protected content
+                document.querySelectorAll('[data-page="home"]').forEach(el => el.classList.add('hidden'));
+                // Ensure protected content is visible
+                document.querySelectorAll('[data-page="skills"], [data-page="budgeting"]').forEach(el => el.classList.remove('hidden'));
+            } else {
+                loggedInLinksContainer.classList.add('hidden');
+                mobileLoggedInLinksContainer.classList.add('hidden');
+                logoutButtonContainer.classList.add('hidden');
+                mobileLogoutButtonContainer.classList.add('hidden');
+                // Hide protected content
+                document.querySelectorAll('[data-page="skills"], [data-page="budgeting"]').forEach(el => el.classList.add('hidden'));
+                // Ensure home page is shown
+                document.querySelectorAll('[data-page="home"]').forEach(el => el.classList.remove('hidden'));
+            }
+        }
+        
+        // Function to handle navigation and scrolling
+        function handleNavigation(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                // Determine if the target is a protected page
+                const isProtectedPage = targetElement.dataset.page === 'skills' || targetElement.dataset.page === 'budgeting';
+                
+                if (isProtectedPage && !isLoggedIn) {
+                    // If not logged in and trying to access a protected page, show modal
+                    openModal(ctaModal);
+                } else {
+                    // All other cases: Logged in to a protected page, or any navigation on home page
+                    // Hide all sections, then show only the relevant ones and scroll
+                    allMainSections.forEach(section => section.classList.add('hidden'));
+                    
+                    if (isProtectedPage) {
+                        document.querySelectorAll('[data-page="skills"], [data-page="budgeting"]').forEach(el => el.classList.remove('hidden'));
+                    } else {
+                        document.querySelectorAll('[data-page="home"]').forEach(el => el.classList.remove('hidden'));
+                    }
+                    
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        }
+        
+        // Attach event listeners to all main navigation links
+        mainNavLinks.forEach(link => {
+            link.addEventListener('click', handleNavigation);
+        });
+        
+        // Function to open a specific modal
+        function openModal(modal) {
+            modal.classList.remove('hidden');
+        }
+
+        // Function to close a specific modal
+        function closeModal(modal) {
+            modal.classList.add('hidden');
+        }
+
+        // Event listeners to open the modals
+        privacyPolicyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(privacyPolicyModal);
+        });
+
+        termsOfServiceLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(termsOfServiceModal);
+        });
+
+        getStartedBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(ctaModal);
+        });
+
+        joinEducatedBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(ctaModal);
+        });
+
+        // Attach event listeners to close buttons in modals
+        const closeButtons = document.querySelectorAll('.modal-close-btn');
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modal = btn.closest('.fixed');
+                if (modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+
+        // Close modals when clicking outside of them
+        const allModals = [ctaModal, privacyPolicyModal, termsOfServiceModal];
+        allModals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal);
+                }
+            });
+        });
+        
+        // --- Google Sign-In Callback ---
+        // This function is called by the Google SDK after a user attempts to sign in
+        function handleCredentialResponse(response) {
+            // Decode the ID token to get user information
+            const responsePayload = decodeJwtResponse(response.credential);
+            const userEmail = responsePayload.email;
+
+            // Simulate checking if the email is in our system
+            // In a real application, you would send the 'response.credential' (ID token)
+            // to your backend server for verification and then check your database.
+            const allowedEmails = ["jtorres090906@gmail.com", "wrapsmack@gmail.com", "test@example.com"]; // Add emails you want to allow
+
+            googleSigninMessage.classList.remove('hidden', 'text-red-500', 'text-green-500');
+            googleSigninMessage.classList.add('text-gray-600');
+            googleSigninMessage.textContent = 'Checking your access...';
+
+            setTimeout(() => {
+                if (allowedEmails.includes(userEmail)) {
+                    // Set a global variable to persist login state
+                    isLoggedIn = true;
+                    // Update UI to show protected content and logout button
+                    updateLoggedInState();
+
+                    googleSigninMessage.classList.remove('text-gray-600');
+                    googleSigninMessage.classList.add('text-green-500');
+                    googleSigninMessage.textContent = `Welcome, ${responsePayload.given_name}! Redirecting...`;
+                    closeModal(ctaModal);
+                    // Redirect to the skills page within the SPA
+                    document.getElementById('video-skills').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    googleSigninMessage.classList.remove('text-gray-600');
+                    googleSigninMessage.classList.add('text-red-500');
+                    googleSigninMessage.textContent = 'Access denied. Your email is not registered.';
+                }
+            }, 1500); // Simulate network delay
+
+        }
+        
+        // --- Logout Logic ---
+        function handleLogout() {
+            isLoggedIn = false;
+            updateLoggedInState();
+            document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Attach logout event listeners
+        document.getElementById('logout-btn').addEventListener('click', handleLogout);
+        document.getElementById('mobile-logout-btn').addEventListener('click', handleLogout);
+
+        // Helper function to decode JWT (needed for Google's credential response)
+        function decodeJwtResponse(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+        
+        // --- Contact Form Logic with Validation and Backend Call ---
+        const contactForm = document.getElementById('contact-form');
+        const contactMessageInput = document.getElementById('contact-message');
+        const contactSubjectInput = document.getElementById('contact-subject');
+        const contactMessageError = document.getElementById('contact-message-error');
+        const contactSubmitBtn = document.getElementById('contact-submit-btn');
+        const contactSuccessMessage = document.getElementById('contact-success-message');
+        const contactErrorMessage = document.getElementById('contact-error-message');
+        const closeSuccessBtn = document.getElementById('close-success-btn');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent the default form submission behavior
+
+            // Hide previous messages
+            contactSuccessMessage.classList.add('hidden');
+            contactErrorMessage.classList.add('hidden');
+            contactMessageError.classList.add('hidden');
+
+            const message = contactMessageInput.value;
+            const words = message.trim().split(/\s+/).filter(word => word.length > 0).length;
+
+            if (words < 30) {
+                contactMessageError.classList.remove('hidden');
+                return;
+            }
+
+            contactSubmitBtn.textContent = 'Sending...';
+            contactSubmitBtn.disabled = true;
+
+            const formData = {
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                subject: contactSubjectInput.value,
+                message: message
+            };
+
+            try {
+                // Send form data to the backend server
+                const response = await fetch('http://localhost:3000/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    contactSuccessMessage.classList.remove('hidden');
+                    contactForm.reset();
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        contactSuccessMessage.classList.add('hidden');
+                    }, 5000);
+                } else {
+                    contactErrorMessage.classList.remove('hidden');
+                    contactErrorMessage.querySelector('span').textContent = 'Error: ' + (result.error || 'There was an issue sending your message.');
+                }
+            } catch (error) {
+                console.error('Network or server error:', error);
+                contactErrorMessage.classList.remove('hidden');
+                contactErrorMessage.querySelector('span').textContent = 'Network error. Please ensure the backend server is running and try again.';
+            } finally {
+                contactSubmitBtn.textContent = 'Send Message';
+                contactSubmitBtn.disabled = false;
+            }
+        });
+
+        closeSuccessBtn.addEventListener('click', () => {
+            contactSuccessMessage.classList.add('hidden');
+        });
+
+        // --- Mobile Menu Functionality ---
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Toggle mobile menu visibility
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Theme Toggle Functionality ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
+        const htmlElement = document.querySelector('html');
+
+        function toggleTheme() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        themeToggleBtnMobile.addEventListener('click', toggleTheme);
+
+        // Check for saved theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+            updateLoggedInState();
+        });
+    </script>
+</body>
+</html>
