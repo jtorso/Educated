@@ -40,8 +40,8 @@
                 Educated
             </a>
             
+            <!-- Desktop navigation menu and utility items -->
             <div class="hidden md:flex items-center space-x-8">
-                <!-- Desktop navigation menu -->
                 <ul id="desktop-menu" class="flex items-center space-x-8" role="list">
                     <li><a href="#mission" class="text-gray-600 hover:text-indigo-600 transition duration-300">About</a></li>
                     <li><a href="#impact" class="text-gray-600 hover:text-indigo-600 transition duration-300">Our Impact</a></li>
@@ -54,16 +54,14 @@
                     </li>
                 </ul>
                 
-                <div class="flex items-center space-x-4">
-                    <!-- Logout button placeholder -->
-                    <div id="logout-button-container" class="hidden">
-                        <button id="logout-btn" class="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full transition duration-300">Log Out</button>
-                    </div>
+                <!-- Logout button placeholder -->
+                <div id="logout-button-container" class="hidden ml-4">
+                    <button id="logout-btn" class="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full transition duration-300">Log Out</button>
                 </div>
             </div>
             
+            <!-- Mobile menu button -->
             <div class="flex items-center space-x-4 md:hidden">
-                <!-- Mobile menu button -->
                 <button id="mobile-menu-button" class="p-2 rounded-md text-gray-600 hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-label="Open main menu">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -210,7 +208,7 @@
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden p-6" aria-label="Video on prioritizing assignments">
                         <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 text-sm">
                             <!-- Video coming soon -->
-                            <span class="text-center p-4">Video: Prioritizing Your To-Do List</span>
+                            <span class="text-center p-4">Video: Prioritizing Your To-Do-List</span>
                         </div>
                         <h3 class="text-xl font-semibold mt-4 mb-2">The Procrastination Paradox</h3>
                         <p class="text-gray-600">Discover strategies to tackle the most important tasks first and avoid last-minute stress.</p>
@@ -678,40 +676,31 @@
             const responsePayload = decodeJwtResponse(response.credential);
             const userEmail = responsePayload.email;
 
-            // Simulate checking if the email is in our system
-            // In a real application, you would send the 'response.credential' (ID token)
-            // to your backend server for verification and then check your database.
-            const allowedEmails = ["jtorres090906@gmail.com", "wrapsmack@gmail.com", "test@example.com"]; // Add emails you want to allow
-
-            googleSigninMessage.classList.remove('hidden', 'text-red-500', 'text-green-500');
-            googleSigninMessage.classList.add('text-gray-600');
-            googleSigninMessage.textContent = 'Checking your access...';
-
-            setTimeout(() => {
-                if (allowedEmails.includes(userEmail)) {
-                    // Set a global variable to persist login state
-                    isLoggedIn = true;
-                    // Update UI to show protected content and logout button
-                    updateLoggedInState();
-
-                    googleSigninMessage.classList.remove('text-gray-600');
-                    googleSigninMessage.classList.add('text-green-500');
-                    googleSigninMessage.textContent = `Welcome, ${responsePayload.given_name}! Redirecting...`;
-                    closeModal(ctaModal);
-                    // Redirect to the skills page within the SPA
-                    document.getElementById('video-skills').scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    googleSigninMessage.classList.remove('text-gray-600');
-                    googleSigninMessage.classList.add('text-red-500');
-                    googleSigninMessage.textContent = 'Access denied. Your email is not registered.';
-                }
-            }, 1500); // Simulate network delay
+            // Since we're allowing all emails, no need for an email check
+            // We just need to make sure the sign-in was successful
+            if (responsePayload.email) {
+                isLoggedIn = true;
+                // Save login state to localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                updateLoggedInState();
+                googleSigninMessage.classList.remove('hidden', 'text-red-500', 'text-gray-600');
+                googleSigninMessage.classList.add('text-green-500');
+                googleSigninMessage.textContent = `Welcome, ${responsePayload.given_name}! Redirecting...`;
+                closeModal(ctaModal);
+                document.getElementById('video-skills').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                googleSigninMessage.classList.remove('hidden', 'text-green-500', 'text-gray-600');
+                googleSigninMessage.classList.add('text-red-500');
+                googleSigninMessage.textContent = 'Sign-in failed. Please try again.';
+            }
 
         }
         
         // --- Logout Logic ---
         function handleLogout() {
             isLoggedIn = false;
+            // Clear login state from localStorage
+            localStorage.removeItem('isLoggedIn');
             updateLoggedInState();
             document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
         }
@@ -813,31 +802,10 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // --- Theme Toggle Functionality ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeToggleBtnMobile = document.getElementById('theme-toggle-mobile');
-        const htmlElement = document.querySelector('html');
-
-        function toggleTheme() {
-            if (htmlElement.classList.contains('dark')) {
-                htmlElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        themeToggleBtn.addEventListener('click', toggleTheme);
-        themeToggleBtnMobile.addEventListener('click', toggleTheme);
-
-        // Check for saved theme on page load
+        // Initial check for login state on page load
         document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                htmlElement.classList.add('dark');
-            } else {
-                htmlElement.classList.remove('dark');
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                isLoggedIn = true;
             }
             updateLoggedInState();
         });
